@@ -1,0 +1,20 @@
+MATCH (bob:Author)-[:UPLOAD]->(w:Work)
+WHERE bob.prior_1595426051223=TRUE AND 
+	w.prior_1595426051223=TRUE
+WITH bob, COLLECT(DISTINCT w.title) AS publish_collection
+RETURN bob.author_id AS author_id, 
+  REDUCE(initAray='', title IN publish_collection|initAray + title ) AS publish_activity_description
+
+  MATCH (a:Author)-[:UPLOAD]->(w:Work)
+WHERE a.prior_1595426051223=TRUE 
+	AND w.test_1595426051223=TRUE
+WITH a, COUNT(DISTINCT w) AS num_w
+SET a.work_test_1595426051223=num_w
+
+MATCH (a:Author)-[:UPLOAD]->(w:Work)
+WHERE a.prior_1595426051223=TRUE 
+	AND w.prior_1595426051223=TRUE
+WITH a, COUNT(DISTINCT w) AS num_w
+SET a.work_prior_1595426051223=num_w
+
+algorithm/collaborative_filtering.py
