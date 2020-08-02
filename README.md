@@ -3,7 +3,7 @@
 
 **Lecturer:** TS. Huỳnh Ngọc Tín
 
-**Setup:** [Download]()
+**Run:** python src/main.py
 
 **Tài liệu:** 
 
