@@ -53,7 +53,7 @@ class ContentBased(Algorithm):
             WITH a, b, num_col* 1.0/(a.work_prior_{uid}*b.work_prior_{uid}) AS score
             WHERE NOT EXISTS((a)-[:cosine_{uid}]-(b))
             CREATE (a)-[:cosine_{uid} """.format(uid=project_uid)
-        query = """ { score:score } ]->(b)
+        query += """ { score:score } ]->(b)
         """
         db.run(query)
 

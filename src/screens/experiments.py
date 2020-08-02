@@ -13,7 +13,6 @@ from utils.image import RBGAImage
 from models.step import Step
 
 from controllers.main import controller
-from controllers.excution import excute
 
 
 class Experiments(ScrollableScreen):
@@ -358,47 +357,47 @@ class Experiments(ScrollableScreen):
         print("training-disable")
         self.button_train.setEnable(False)
         self.button_train.setText("Đợi")
-        self._show_button_train()
 
     def enable_train(self):
         print("training-enable")
         self.button_train.setEnable(True)
         self.button_train.setText("Thực hiện")
-        self._show_button_train()
 
     def disable_valuate(self):
         print("disable_valuate")
         self.button_valuate.setEnable(False)
         self.button_valuate.setText("Đợi")
-        self._show_button_valuate()
 
     def enable_valuate(self, ):
         print("enable_valuate")
         self.button_valuate.setEnable(True)
         self.button_valuate.setText("Thực hiện")
-        self._show_button_valuate()
 
     def train_on_error(self, error: ValueError):
         self.warn_train(error)
         self.enable_train()
+        controller.busy = False
 
     def train_callback(self, **kw):
         self.update_is_trained()
         self.enable_valuate()
         self.enable_train()
+        controller.busy = False
 
     def train(self):
         self.disable_train()
         controller.train(
-            algorithm=self.algorithm, cb_end=self.train_callback, on_error=self.train_on_error)
+            algorithm=self.algorithm, callback=self.train_callback, on_error=self.train_on_error)
 
     def valuate_callback(self, **kw):
         self._show_bar_chart()
         self.enable_valuate()
+        controller.busy = False
 
     def valuate_on_error(self, error: ValueError):
         self.warn_valuate(error)
         self.enable_valuate()
+        controller.busy = False
 
     def valuate(self):
         self.disable_valuate()
@@ -408,12 +407,10 @@ class Experiments(ScrollableScreen):
     def warn_train(self, error: ValueError):
         self.error_training = error
         self.warning_line_training.setText(error.args)
-        self._show_warning_training()
 
     def warn_valuate(self, error: ValueError):
         self.error_training = error
         self.warning_valuation.setText(error.args)
-        self._show_warning_training()
 
     def _screenWillShow(self, **kwargs):
         super()._screenWillShow(**kwargs)

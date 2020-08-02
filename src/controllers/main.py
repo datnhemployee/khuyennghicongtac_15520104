@@ -61,12 +61,12 @@ class Controller():
             raise ValueError(
                 "Một số trường dữ liệu bị sai. Vui lòng kiểm  tra lại.")
         if (prior_start < 1995 or
-            prior_end < 1995 or
-            test_end < 1995 or
-            test_end < 1995 or
-            prior_start > prior_end or
-            test_start > test_end or
-            prior_end > test_start
+                prior_end < 1995 or
+                test_end < 1995 or
+                test_end < 1995 or
+                prior_start > prior_end or
+                test_start > test_end or
+                prior_end > test_start
             ):
             self.busy = False
             raise ValueError(
@@ -146,19 +146,18 @@ class Controller():
     def is_trained(self, algorithm) -> bool:
         return neo4jService.is_trained(self.project.uid, algorithm._id)
 
-    def _train(self, algorithm, cb_check=None, cb_end=None, **kwargs):
+    def _train(self, algorithm, **kwargs):
         algorithm.train(project_uid=self.project.uid)
         self.project.update_algorithm(algorithm)
         projectService.save(self.project)
+        self.busy = False
 
-    def train(self, algorithm, cb_check=None, on_error=None, cb_end=None, **kwargs):
+    def train(self, algorithm, on_error=None, callback=None, **kwargs):
         if(self.busy == False):
             self.busy = True
-            if(cb_check is not None):
-                cb_check()
-            kwargs["cb_end"] = cb_end
             kwargs["algorithm"] = algorithm
-            excute(task=self._train, on_error=on_error, args=kwargs)
+            excute(task=self._train, on_error=on_error,
+                   args=kwargs, callback=callback)
         else:
             on_error(ValueError(
                 "Chỉ có thể huấn luyện/ đánh giá 1 mô hình tại 1 thời điểm."))
@@ -167,6 +166,7 @@ class Controller():
         algorithm.valuate(project_uid=self.project.uid)
         self.project.update_algorithm(algorithm)
         projectService.save(self.project)
+        self.busy = False
 
     def valuate(self, algorithm, on_error=None, callback=None, **kw):
         if(self.busy == False):

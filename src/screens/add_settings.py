@@ -51,12 +51,7 @@ class AddSettings(ScrollableScreen):
         self.button_ok = Button(self.container, text="Thêm mới", width=self.button_width,
                                 height=self.train_bar_height, enable=True, onClick=self.add_algorithm)
 
-        self.button_configuration = Button(self.container, text="Cấu hình máy", width=self.button_width,
-                                           height=self.train_bar_height, enable=True, onClick=None)
-
         self.warning_line_ok = WarningLine(self.container,)
-        self.warning_line_configuration = WarningLine(
-            self.container, text="Vui long kiểm tra hoặc tùy chỉnh thông số mặc định dựa trên cấu hình của máy")
 
     def _init_steps_list(self,):
         """
@@ -162,18 +157,6 @@ class AddSettings(ScrollableScreen):
             row=next_row, column=0, sticky="nw", pady=(0, PADDING),  padx=(PADDING, 0))
         self.button_ok.show_components()
 
-    def _show_warning_configuration(self):
-        next_row = len(self.step_list) + 5
-        self.warning_line_configuration.grid(
-            row=next_row, column=0, sticky="nw", pady=(0, PADDING),  padx=(PADDING, 0))
-        self.warning_line_configuration.show_components()
-
-    def _show_button_configuration(self):
-        next_row = len(self.step_list) + 6
-        self.button_configuration.grid(
-            row=next_row, column=0, sticky="nw", pady=(0, PADDING),  padx=(PADDING, 0))
-        self.button_configuration.show_components()
-
     def _screenWillShow(self, **kwargs):
         super()._screenWillShow(**kwargs)
         try:
@@ -193,5 +176,3 @@ class AddSettings(ScrollableScreen):
         self._show_steps_list()
 
         self._show_button_ok()
-        self._show_warning_configuration()
-        self._show_button_configuration()
