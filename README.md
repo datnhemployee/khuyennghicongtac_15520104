@@ -22,6 +22,8 @@
 |--------------|-------|-------|
 | Networkx | 2.2 | [Homepage](https://networkx.github.io/) |
 | Numpy | 1.15.1 | [Homepage](https://numpy.org/doc/stable/) |
+| Py2neo | 4.3.0 | [Homepage](https://py2neo.org/v4/database.html) |
+| Tkinter |-------| [Homepage](https://docs.python.org/3.7/library/tkinter.html#tkinter-modules) |
 
 
 **Thuật toán khuyến nghị**
