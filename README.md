@@ -5,7 +5,10 @@
 
 **Setup:** [Download]()
 
-**Tài liệu:** [Read online]()
+**Tài liệu:** 
+-[Báo cáo docx](https://drive.google.com/file/d/1qtW4-EopPExuZQ-HbrL4VEooSL_2MOq7/view?usp=sharing)
+-[Hướng dẫn sử dụng](https://drive.google.com/file/d/1NEpGDwKX6g5ZSnEf15R1P8_swls0Avdq/view?usp=sharing)
+-[Báo cáo pptx](https://drive.google.com/file/d/1704SV3O3eWeqpz-ONEbQtXOIKzyfm-gJ/view?usp=sharing)
 
 ## Giới thiệu
  Trong nghiên cứu khoa học, việc cộng tác đem lại nhiều lợi ích cho các nhà nghiên cứu khi chung tay thực hiện công trình nghiên cứu của mình. Dần theo thời gian, kho dữ liệu bài báo khoa học trở nên khổng lồ và kích thước tăng đáng kể. Do đó, bài toán khuyến nghị cộng tác dần nhận được quan tâm bởi các nhà khoa học. Và cũng theo xu hướng, sự ra đời phương pháp học sâu Node2vec cũng đang nhận được nhiều sự quan tâm của các nhà nghiên cứu. Nhất là các nghiên cứu viên nghiên cứu đề tài trong lĩnh vực khoa học máy tính. Bản thân Node2vec cũng có một số công trình nghiên cứu kế thừa nhằm giải quyết thách thức và khó khăn mà Node2vec còn bỏ ngỏ. Việc khuyến nghị cộng tác dựa trên tiếp cận học sâu Node2vec sẽ giúp hỗ trợ cộng đồng học thuật trong việc nghiên cứu ứng dụng của Node2vec. Đồng thời, việc so sánh Node2vec với một số phương pháp truyền thống khi giải quyết bài toán khuyến  nghị cộng tác sẽ làm nổi bật ưu nhược điểm của Node2vec so với các phương pháp truyền thống. Nhờ vào đó, các nghiên cứu viên/ nhà phát triển có thể chọn lựa sử dụng giữa Node2vec và phương pháp truyền thống trong khuyến nghị cộng tác.
