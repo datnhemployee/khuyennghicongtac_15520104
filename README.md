@@ -3,6 +3,8 @@
 
 **Lecturer:** TS. Huỳnh Ngọc Tín
 
+**student:** Nguyễn Hữu Đạt - 15520104
+
 **Run:** python src/main.py
 
 **Tài liệu:** 
