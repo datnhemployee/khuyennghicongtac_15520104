@@ -38,12 +38,9 @@ class Neo4jService():
 
     def mark_test_author(self, uid, num_author=100):
         query = """
-            MATCH (a:Author)-[:test_{uid}]-(b:Author)
+            MATCH (a:Author)-[:test_{uid}]-(:Author)
             WHERE a.prior_{uid}=TRUE
-            WITH DISTINCT a, COUNT(DISTINCT b) AS num_col
-
-            WHERE num_col >= $TopK
-            WITH a, num_col LIMIT $num_author
+            WITH DISTINCT a
             SET a.test_{uid}=TRUE
         """.format(uid=uid)
         db.run(query, parameters={
