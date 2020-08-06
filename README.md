@@ -1,4 +1,4 @@
-# XiQuap
+# weCoNet
 **Trường:** Đại học Công Nghệ Thông Tin - Đại học Quốc gia Hồ Chí Minh
 
 **Lớp:** SE505.K21 (Khóa luận tốt nghiệp)
