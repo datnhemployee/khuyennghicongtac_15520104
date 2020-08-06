@@ -9,6 +9,9 @@
 
 **Khởi động chương trình demo:** python src/main.py
 
+**Ghi chú:** 
+Do Github không cho phép đăng tệp có kích thước hơn 100MB nên bạn đọc vui lòng tải mô hình đã huấn luyện tại [Google Drive](https://drive.google.com/file/d/122n-UZNBmxoKSiVoixZBPfVCByPvf4Y1/view?usp=sharing) và đặt vào thư mục public/. 
+
 **Tài liệu:** 
 
  -[Báo cáo docx](https://drive.google.com/file/d/1qtW4-EopPExuZQ-HbrL4VEooSL_2MOq7/view?usp=sharing)
