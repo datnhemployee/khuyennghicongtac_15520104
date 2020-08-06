@@ -1,5 +1,5 @@
 from screens.app import App
-from utils.db import db
+# from utils.db import db
 
 
 def main():

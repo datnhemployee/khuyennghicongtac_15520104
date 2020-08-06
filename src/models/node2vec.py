@@ -160,8 +160,9 @@ class Node2vec(Algorithm):
     #     return model
 
     def get_most_similar(self, model, author_id: str, topn=10) -> list:
+        print("author_id", author_id)
         result = model.most_similar(
-            positive=[author_id], negative=[], topn=topn)
+            positive=[str(author_id)], negative=[], topn=topn)
         return result
 
     def _predict(self, project_uid: int):

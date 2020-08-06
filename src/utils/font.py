@@ -6,6 +6,7 @@ def get_font_Size(font_size_design=14) -> int:
     return font_size_design
 
 
+LOGO = ("Times New Roman", get_font_Size(54), "bold")
 TYPE_TITLE_SCREEN = ("Times New Roman", get_font_Size(16))
 TITLE_SCREEN = ("Times New Roman", get_font_Size(28), "bold")
 HEADER_1 = ("Times New Roman", get_font_Size(28), "bold")

@@ -111,8 +111,16 @@ PATH_GRAPH_NODE2VEC_NEO4J = connect_path_file(
 PATH_GRAPH_NODE2VEC = connect_path_file(
     PATH_PUBLIC_FOLDER, FILE_GRAPH_NODE2VEC)
 
+"""
+    Demo database 
+"""
+FILE_DEMO_DB = "records.csv"
+PATH_DEMO_DATABASE = connect_path_file(
+    PATH_PUBLIC_FOLDER_NEO4J, FILE_DEMO_DB)
+
 
 def get_path_node2vec_emb(_id): return "public/emb{0}".format(_id)
+
 
 """
     Hình  
@@ -140,7 +148,12 @@ ICON_LINK_PREDICTION = connect_path_file(
     get_current_directory(), "img/icon_link_prediction.png")
 ICON_CONTENT_BASED = connect_path_file(
     get_current_directory(), "img/icon_content_based.png")
-
+ICON_APP = connect_path_file(
+    get_current_directory(), "img/icon_app.png")
+ICON_RESEARCHER = connect_path_file(
+    get_current_directory(), "img/icon_researcher.png")
+ICON_CHART = connect_path_file(
+    get_current_directory(), "img/icon_chart.png")
 """
     Database
 """
@@ -151,6 +164,8 @@ PAPER_DATABASE = connect_path_file(
     get_current_directory(neo4j=True), "public/paper.csv")
 AUTHOR_PAPER_DATABASE = connect_path_file(
     get_current_directory(neo4j=True), "public/author_paper.csv")
+AUTHOR_DATABASE = connect_path_file(
+    get_current_directory(neo4j=True), "public/author.csv")
 
 """
     Bài giới thiệu chung

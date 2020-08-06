@@ -1,0 +1,208 @@
+{
+    "uid": 1595426051223,
+    "name": "T\u00ean d\u1ef1 \u00e1n",
+    "algorithms": [{
+        "_id": 1595426048728,
+        "name": "Node2vec",
+        "setting": {
+            "p": 0.5,
+            "q": 1.0,
+            "num_walks": 10,
+            "walk_length": 80,
+            "dimensions": 128,
+            "window_size": 5
+        },
+        "descriptions": "",
+        "valuations": {
+            "precision": 0.15,
+            "recall": 0.31,
+            "fmeasure": 0.21
+        }
+    }, {
+        "_id": 1595427567878,
+        "name": "Node2vec",
+        "setting": {
+            "p": 1.0,
+            "q": 0.5,
+            "num_walks": 10,
+            "walk_length": 80,
+            "dimensions": 128,
+            "window_size": 5
+        },
+        "descriptions": "",
+        "valuations": {
+            "precision": 0.16,
+            "recall": 0.31,
+            "fmeasure": 0.21
+        }
+    }, {
+        "_id": 1595427579283,
+        "name": "Node2vec",
+        "setting": {
+            "p": 1.0,
+            "q": 1.0,
+            "num_walks": 10,
+            "walk_length": 80,
+            "dimensions": 128,
+            "window_size": 5
+        },
+        "descriptions": "",
+        "valuations": {
+            "precision": 0.15,
+            "recall": 0.31,
+            "fmeasure": 0.21
+        }
+    }, {
+        "_id": 1595429146239,
+        "name": "Node2vec",
+        "setting": {
+            "p": 1.0,
+            "q": 1.0,
+            "num_walks": 5,
+            "walk_length": 80,
+            "dimensions": 128,
+            "window_size": 5
+        },
+        "descriptions": "",
+        "valuations": {
+            "precision": 0.15,
+            "recall": 0.31,
+            "fmeasure": 0.2
+        }
+    }, {
+        "_id": 1595429189273,
+        "name": "Node2vec",
+        "setting": {
+            "p": 1.0,
+            "q": 1.0,
+            "num_walks": 10,
+            "walk_length": 80,
+            "dimensions": 10,
+            "window_size": 5
+        },
+        "descriptions": "",
+        "valuations": {
+            "precision": 0.13,
+            "recall": 0.26,
+            "fmeasure": 0.17
+        }
+    }, {
+        "_id": 1595474322630,
+        "name": "CommonNeighbor",
+        "setting": {},
+        "descriptions": "",
+        "valuations": {
+            "precision": 0.19,
+            "recall": 0.33,
+            "fmeasure": 0.24
+        }
+    }, {
+        "_id": 1595474453036,
+        "name": "Jaccard",
+        "setting": {},
+        "descriptions": "",
+        "valuations": {
+            "precision": 0.17,
+            "recall": 0.29,
+            "fmeasure": 0.21
+        }
+    }, {
+        "_id": 1595725985322,
+        "name": "AdamicAdar",
+        "setting": {},
+        "descriptions": "",
+        "valuations": {
+            "precision": 0.2,
+            "recall": 0.35,
+            "fmeasure": 0.25
+        }
+    }, {
+        "_id": 1595744219946,
+        "name": "Node2vec",
+        "setting": {
+            "p": 1.0,
+            "q": 1.0,
+            "num_walks": 10,
+            "walk_length": 80,
+            "dimensions": 128,
+            "window_size": 15
+        },
+        "descriptions": "",
+        "valuations": {
+            "precision": 0.16,
+            "recall": 0.33,
+            "fmeasure": 0.22
+        }
+    }, {
+        "_id": 1595771897565,
+        "name": "ContentBased",
+        "setting": {},
+        "descriptions": "",
+        "valuations": {
+            "precision": 0.31,
+            "recall": 0.36,
+            "fmeasure": 0.33
+        }
+    }, {
+        "_id": 1596068914007,
+        "name": "Node2vec",
+        "setting": {
+            "p": 1.5,
+            "q": 0.5,
+            "num_walks": 10,
+            "walk_length": 80,
+            "dimensions": 128,
+            "window_size": 50
+        },
+        "descriptions": "",
+        "valuations": {
+            "precision": 0.17,
+            "recall": 0.35,
+            "fmeasure": 0.23
+        }
+    }, {
+        "_id": 1596068981262,
+        "name": "Node2vec",
+        "setting": {
+            "p": 0.5,
+            "q": 1.5,
+            "num_walks": 10,
+            "walk_length": 80,
+            "dimensions": 128,
+            "window_size": 50
+        },
+        "descriptions": "",
+        "valuations": {
+            "precision": 0.17,
+            "recall": 0.35,
+            "fmeasure": 0.23
+        }
+    }, {
+        "_id": 1596378191523,
+        "name": "ContentBased",
+        "setting": {},
+        "descriptions": "",
+        "valuations": {
+            "precision": 0.31,
+            "recall": 0.36,
+            "fmeasure": 0.33
+        }
+    }],
+    "next_id": 0,
+    "prior": {
+        "start": 2014,
+        "end": 2015,
+        "num_author": 319247,
+        "num_paper": 202864,
+        "num_connection": 1008797
+    },
+    "test": {
+        "start": 2016,
+        "end": 2016,
+        "num_author": 100,
+        "num_connection": 1802,
+        "num_graph_author": 114327,
+        "num_graph_paper": 84340,
+        "num_graph_connection": 283711
+    }
+}

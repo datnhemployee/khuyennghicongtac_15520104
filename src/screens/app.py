@@ -1,14 +1,17 @@
 
 from tkinter import Tk, Frame
-from screens.home import Home as HomeScreen
-from screens.experiments import Experiments as ExperimentScreen
-from screens.project import Project as ProjectScreen
-from screens.add_project import AddProject as AddProjectScreen
-from screens.add_algorithms import AddAlgorithm as AddAlgorithmScreen
-from screens.add_settings import AddSettings as AddSettingsScreen
-from screens.error import Error as ErrorScreen
-from screens.about import About as AboutScreen
-from screens.init import Init as InitScreen
+# from screens.home import Home as HomeScreen
+from screens.splash import Splash
+from screens.home import Home
+from screens.queries import Queries
+# from screens.experiments import Experiments as ExperimentScreen
+# from screens.project import Project as ProjectScreen
+# from screens.add_project import AddProject as AddProjectScreen
+# from screens.add_algorithms import AddAlgorithm as AddAlgorithmScreen
+# from screens.add_settings import AddSettings as AddSettingsScreen
+# from screens.error import Error as ErrorScreen
+# from screens.about import About as AboutScreen
+# from screens.init import Init as InitScreen
 from components.screen import Screen
 # from utils.file import A as icon_photo
 # from tkinter import PhotoImage
@@ -39,8 +42,9 @@ class App(Tk):
         self.container.grid(row=0, column=1, sticky="nsew")
 
         self.frames = {}
-        screens = (HomeScreen, ProjectScreen, ExperimentScreen, AboutScreen, InitScreen,
-                   AddProjectScreen, AddAlgorithmScreen, AddSettingsScreen, ErrorScreen)
+        screens = (Splash, Home, Queries)
+        # screens = (HomeScreen, ProjectScreen, ExperimentScreen, AboutScreen, InitScreen,
+        #            AddProjectScreen, AddAlgorithmScreen, AddSettingsScreen, ErrorScreen)
         for F in screens:
             frame = F(self.container, self)
             name = get_screen_name(frame)
@@ -67,22 +71,22 @@ class App(Tk):
         """
         self.resizable(False, False)
 
-    def close_all(self):
-        import matplotlib.pyplot as plt
+    # def close_all(self):
+    #     import matplotlib.pyplot as plt
 
-        plt.close('all')
-        self.quit()
+    #     plt.close('all')
+    #     self.quit()
 
     def __init__(self, *args, **kwargs):
 
         Tk.__init__(self, *args, **kwargs)
 
-        self.wm_protocol('WM_DELETE_WINDOW', func=self.close_all)
+        # self.wm_protocol('WM_DELETE_WINDOW', func=self.close_all)
 
         self.set_size()
         self._init_all_screen()
 
-        self.navigate("Init")
+        self.navigate("Splash")
         # self.wm_attributes('-transparentcolor', self['bg'])
         # self.tk.call('wm', 'iconphoto', self._w, PhotoImage(file=icon_photo))
         # self.iconphoto(True, PhotoImage(file=icon_photo))

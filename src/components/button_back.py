@@ -1,6 +1,5 @@
 from tkinter import Label, Canvas, PhotoImage, LEFT, Frame
 from components.scrollable_screen import ScrollableScreen
-from components.input import Input
 from components.button import Button
 from utils.file import ICON_BACK
 from utils.image import RBGAImage

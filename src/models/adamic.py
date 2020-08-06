@@ -127,44 +127,37 @@ class Adamic(Algorithm):
         print("delete preiction: Done- AdamicAdar", project_uid, self._id)
 
         # num_threads = 1000
-        # lock = Lock()
+        lock = Lock()
 
-        # from utils.file import deleteFileIfExisted
-        # deleteFileIfExisted(_temp_file)
+        from utils.file import deleteFileIfExisted
+        deleteFileIfExisted(_temp_file)
 
-        # from services.prior_network_service import NetWorkXGraph, get_num_author
-        # nwx = NetWorkXGraph()
-        # G = nwx.get_temp_graph()
+        from services.prior_network_service import NetWorkXGraph, get_num_author
+        nwx = NetWorkXGraph()
+        G = nwx.get_temp_graph()
 
-        # # num_author = 100000
-        # lstNodes = list(G.nodes)
-        # num_author = len(lstNodes)
-        # # print("start- num_author1", num_author)
-        # # lstNodes = lstNodes[:num_author]
-        # # num_author = get_num_author(project_uid, "prior")
-        # # print("start- num_author2", num_author)
-        # # print("num_author", lstNodes)
-        # # gap = int(num_author / num_threads)
-        # gap = 1000
-        # num_threads = round(num_author / gap)
+        lstNodes = list(G.nodes)
+        num_author = len(lstNodes)
+        gap = 1000
+        num_threads = round(num_author / gap)
 
-        # print("create threas", num_threads)
-        # lstThreads = [CommonNeighborThread(
-        #     lock=lock,
-        #     G=G,
-        #     lstNodes=lstNodes,
-        #     startIndex=idx_thread * gap,
-        #     idx=idx_thread,
-        #     gap=get_real_gap(
-        #         num_author, idx_thread * gap, gap),
-        #     topK=10)
-        #     for idx_thread in range(num_threads + 1)]
+        print("create threas", num_threads)
+        lstThreads = [AdamicAdarThread(
+            lock=lock,
+            G=G,
+            lstNodes=lstNodes,
+            startIndex=idx_thread * gap,
+            idx=idx_thread,
+            gap=get_real_gap(
+                num_author, idx_thread * gap, gap),
+            topK=10)
+            for idx_thread in range(num_threads + 1)]
 
-        # for (idx, comThread) in enumerate(lstThreads):
-        #     comThread.start()
+        for (idx, comThread) in enumerate(lstThreads):
+            comThread.start()
 
-        # for comThread in lstThreads:
-        #     comThread.join()
+        for comThread in lstThreads:
+            comThread.join()
 
         print("done  threads",)
         self._predict(project_uid)

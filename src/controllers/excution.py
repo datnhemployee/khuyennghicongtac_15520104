@@ -9,6 +9,7 @@ def promise(**kwargs):
         callback = kwargs.get("callback", None)
         on_error = kwargs.get("on_error", None)
         args = kwargs.get("args", {})
+
         result = task(**args)
 
         if (result is None):

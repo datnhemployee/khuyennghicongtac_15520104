@@ -9,44 +9,9 @@ import networkx as nx
 import heapq
 from datetime import datetime
 
-_temp_adamic = "public/adamic.csv"
-_temp_katz = "public/katz.csv"
-_temp_jaccard = "public/jaccard.csv"
+
 _temp_commonNeighbor = "public/commonNeighbor.csv"
 _temp_file = _temp_commonNeighbor
-
-
-def katz(G, author_id: int, length=10, beta=0.85) -> list:
-    if (author_id is None or G is None):
-        raise ValueError("Không thể chạy với author_id rỗng và G rỗng.")
-
-    result = []
-    dict_katz = {}
-    neighbors = nx.neighbors(G, author_id)
-    for neighbor in neighbors:
-        dict_katz[neighbor] = beta
-    l = 1
-    next_neighs = neighbors
-    while l <= length:
-        _temp_neighs = []
-        for neighbor in next_neighs:
-            for friend in nx.neighbors(neighbor):
-                _temp_neighs.append(friend)
-
-        for neighbor in _temp_neighs:
-            num_path = _temp_neighs.count(neighbor)
-            if (num_path > 0):
-                if (dict_katz.get(neighbor, None) is None):
-                    dict_katz[neighbor] = num_path * (beta**l)
-                else:
-                    dict_katz[neighbor] += num_path * (beta**l)
-
-        next_neighs = _temp_neighs
-        l += 1
-
-    result = [(author_id, key, dict_katz[key]) for key in dict_katz.keys()]
-
-    return result
 
 
 def commonNeighbor(G, ebunch=None):
@@ -102,20 +67,6 @@ class CommonNeighborThread(Thread):
 
         print("run-", self.startIndex, self.gap,)
 
-    # def add_adamic_adar(self):
-    #     # if (i >= 100000):
-    #     #     break
-    #     # if (i >= num_author):
-    #     #     break
-    #     _2hoplist = get_2_hop_u(self.G, self.lstNodes[self.idx])
-    #     preds = nx.adamic_adar_index(self.G, _2hoplist)
-    #     preds = heapq.nlargest(self.topK, preds, key=lambda x: x[2])
-    #     for (idx, pred) in enumerate(preds):
-    #         self.preds[self.startIndex + self.idx * self.topK + idx] = pred
-    #     # if (i < 4):
-    #     #     print("result", predics[i])
-    #     self.idx += 1
-
     def write_csv(self):
         print("start-writting", self.idx)
         from utils.file import existing_file
@@ -143,10 +94,7 @@ class CommonNeighborThread(Thread):
             _2hoplist = get_2_hop_u(
                 self.G, self.lstNodes[self.startIndex + idx_author])
             preds_by_authorId = commonNeighbor(self.G, _2hoplist)
-            # preds_by_authorId = nx.jaccard_coefficient(self.G, _2hoplist)
-            # preds_by_authorId = nx.adamic_adar_index(self.G, _2hoplist)
-            # preds_by_authorId = katz(
-            #     self.G, self.lstNodes[idx_author], length=10)
+
             preds_by_authorId = heapq.nlargest(
                 self.topK, preds_by_authorId, key=lambda x: x[2])
             for (idx_pred, pred) in enumerate(preds_by_authorId):
@@ -189,45 +137,38 @@ class CommonNeighbor(Algorithm):
         t1 = datetime.now()
         print("start:{0}".format(t1))
         print("start- commonNeighbor", project_uid)
-        # num_threads = 1000
-        # lock = Lock()
+        lock = Lock()
 
-        # from utils.file import deleteFileIfExisted
-        # deleteFileIfExisted(_temp_file)
+        from utils.file import deleteFileIfExisted
+        deleteFileIfExisted(_temp_file)
 
-        # from services.prior_network_service import NetWorkXGraph, get_num_author
-        # nwx = NetWorkXGraph()
-        # G = nwx.get_temp_graph()
+        from services.prior_network_service import NetWorkXGraph, get_num_author
+        nwx = NetWorkXGraph()
+        G = nwx.get_temp_graph()
 
-        # # num_author = 100000
-        # lstNodes = list(G.nodes)
-        # num_author = len(lstNodes)
-        # # print("start- num_author1", num_author)
-        # # lstNodes = lstNodes[:num_author]
-        # # num_author = get_num_author(project_uid, "prior")
-        # # print("start- num_author2", num_author)
-        # # print("num_author", lstNodes)
-        # # gap = int(num_author / num_threads)
-        # gap = 1000
-        # num_threads = round(num_author / gap)
+        lstNodes = list(G.nodes)
+        num_author = len(lstNodes)
 
-        # print("create threas", num_threads)
-        # lstThreads = [CommonNeighborThread(
-        #     lock=lock,
-        #     G=G,
-        #     lstNodes=lstNodes,
-        #     startIndex=idx_thread * gap,
-        #     idx=idx_thread,
-        #     gap=get_real_gap(
-        #         num_author, idx_thread * gap, gap),
-        #     topK=10)
-        #     for idx_thread in range(num_threads + 1)]
+        gap = 1000
+        num_threads = round(num_author / gap)
 
-        # for (idx, comThread) in enumerate(lstThreads):
-        #     comThread.start()
+        print("create threas", num_threads)
+        lstThreads = [CommonNeighborThread(
+            lock=lock,
+            G=G,
+            lstNodes=lstNodes,
+            startIndex=idx_thread * gap,
+            idx=idx_thread,
+            gap=get_real_gap(
+                num_author, idx_thread * gap, gap),
+            topK=10)
+            for idx_thread in range(num_threads + 1)]
 
-        # for comThread in lstThreads:
-        #     comThread.join()
+        for (idx, comThread) in enumerate(lstThreads):
+            comThread.start()
+
+        for comThread in lstThreads:
+            comThread.join()
 
         print("done all threads",)
         self._predict(project_uid)
@@ -256,128 +197,6 @@ class CommonNeighbor(Algorithm):
             CREATE (a)-[:_{uid}_{_id} """.format(uid=project_uid, _id=self._id)
         query += """ {score: score}]->(b)"""
         db.run(query, parameters={"path": path})
-
-        # def train(self,
-        #           *arg,
-        #           **kw):
-        #     project_uid = int(kw.get("project_uid"))
-        #     t1 = datetime.now()
-        #     print("start:{0}".format(t1))
-        #     print("start- academic adar", project_uid)
-        #     num_threads = 1000
-        #     # lock = Lock()
-
-        #     from services.prior_network_service import NetWorkXGraph, get_num_author
-        #     nwx = NetWorkXGraph()
-        #     G = nwx.get_temp_graph()
-
-        #     # num_author = 100000
-        #     lstNodes = list(G.nodes)
-        #     num_author = len(lstNodes)
-        #     # print("start- num_author1", num_author)
-        #     # lstNodes = lstNodes[:num_author]
-        #     # num_author = get_num_author(project_uid, "prior")
-        #     # print("start- num_author2", num_author)
-        #     # print("num_author", lstNodes)
-        #     gap = int(num_author / num_threads)
-        #     predics = [(-1, -1, -1.0) for author_idx in range(10 * num_author)]
-
-        #     lstThreads = [AdamicAdarThread(
-        #         # lock=lock,
-        #         G=G,
-        #         lstNodes=lstNodes,
-        #         preds=predics,
-        #         startIndex=idx_thread * gap,
-        #         gap=get_real_gap(
-        #             num_author, idx_thread * gap, gap),
-        #         topK=10)
-        #         for idx_thread in range(num_threads)]
-
-        #     for adaThread in lstThreads:
-        #         adaThread.start()
-
-        #     for adaThread in lstThreads:
-        #         adaThread.join()
-        #     print("done all threads",)
-
-        #     with open("public/jaccard.csv", "w") as _file:
-        #         wr = csv.writer(_file, quoting=csv.QUOTE_NONE,
-        #                         delimiter="|",)
-        #         wr.writerows(predics)
-        #     t2 = datetime.now()
-        #     print("end:{0}".format(t2))
-        #     print("done",)
-
-        # def assign_recall(self, index):
-        #     self.recall.append(index)
-
-        # def train(self,
-        #           *arg,
-        #           **kw):
-        #     project_uid = int(kw.get("project_uid"))
-        #     t1 = datetime.now()
-        #     print("start:{0}".format(t1))
-        #     print("start- academic adar", project_uid)
-        #     from services.neo4j_service import neo4jService
-        #     gap = 1000
-        #     # lock = Lock()
-        #     num_author = neo4jService.get_num_author(project_uid, "prior")
-        #     num_threads = round(num_author / 1000) + 1
-
-        #     print("start- num_author2", num_author)
-        #     # print("num_author", lstNodes)
-
-        #     lstThreads = [AdamicAdarNeo4jThread(
-        #         # lock=lock,
-        #         startIndex=idx_thread * gap,
-        #         gap=get_real_gap(
-        #             num_author, idx_thread * gap, gap),
-        #         topK=10,
-        #         uid=project_uid,
-        #         _id=self._id,
-        #         on_error=self.assign_recall)
-        #         for idx_thread in range(num_threads)]
-
-        #     while True:
-        #         self.recall = []
-
-        #         for adaThread in lstThreads:
-        #             adaThread.start()
-
-        #         for adaThread in lstThreads:
-        #             adaThread.join()
-        #         print("done all threads",)
-        #         len_recall = len(self.recall)
-        #         if (len_recall != 0):
-        #             lstThreads = [
-        #                 AdamicAdarNeo4jThread(
-        #                     # lock=lock,
-        #                     startIndex=idx_thread * gap,
-        #                     gap=get_real_gap(
-        #                         num_author, idx_thread * gap, gap),
-        #                     topK=10,
-        #                     uid=project_uid,
-        #                     _id=self._id,
-        #                     on_error=self.assign_recall)
-        #                 for idx_thread in self.recall
-        #             ]
-
-        #     t2 = datetime.now()
-        #     print("end:{0}".format(t2))
-        #     print("done",)
-
-        # def train(self,
-        #           *arg,
-        #           **kw
-        #           ):
-        #     project_uid = int(kw.get("project_uid"))
-        #     print("project_uid", project_uid)
-        #     print("CommonNeighbor-start")
-        #     from services.prior_network_service import NetWorkXGraph
-        #     nwx = NetWorkXGraph()
-        #     G = nwx.get_temp_graph()
-        #     nwx.export_adamic_adar(G, project_uid)
-        #     print("CommonNeighbor-end")
 
     def get_step_list(self):
         step_list = [

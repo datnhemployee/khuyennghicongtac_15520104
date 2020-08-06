@@ -21,7 +21,7 @@ class ScrollableScreen(Screen):
         self.scrollbar = Scrollbar(self, orient="vertical", width=scrollbar_width,
                                    command=self.canvas.yview)
         self.update_idletasks()
-        self.canvas.configure(
+        self.canvas.config(
             width=self.app.width - scrollbar_width,
             height=self.app.height,
             yscrollcommand=self.scrollbar.set,
@@ -41,7 +41,7 @@ class ScrollableScreen(Screen):
 
     def _onFrameConfigure(self, event):
         '''Reset the scroll region to encompass the inner frame'''
-        self.canvas.configure(scrollregion=self.canvas.bbox("all"))
+        self.canvas.config(scrollregion=self.canvas.bbox("all"))
 
     def _init_components(self):
         """
