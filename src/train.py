@@ -127,6 +127,12 @@ def get_node2vec():
     return algorithm
 
 
+def get_content_based():
+    from models.content_based import ContentBased
+    algorithm = ContentBased()
+    return algorithm
+
+
 def get_common_neighbor():
     from models.common_neighbor import CommonNeighbor
     algorithm = CommonNeighbor()
@@ -166,6 +172,11 @@ def train():
     train_and_valuate: Node2vec
     """
     # model = get_node2vec()
+
+    """
+    train_and_valuate: Content based
+    """
+    # model = get_content_based()
 
     """
     train_and_valuate: Common Neighbors
