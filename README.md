@@ -42,11 +42,11 @@
 | Tên | Ý nghĩa | Đường dẫn |
 |--------------|-------|-------|
 | src/components | Những thành phần dùng để hiển thị trên màn hình | [Đường dẫn](https://github.com/datnhemployee/khuyennghicongtac_15520104/tree/master/src/components) |
-| src/controllers | Xử lý logic giữa phần mềm và cơ sở dữ liệu | [Homepage](https://github.com/datnhemployee/khuyennghicongtac_15520104/tree/master/src/controllers) |
-| src/models | Các thuật toán khuyến nghị cộng tác | [Homepage](https://github.com/datnhemployee/khuyennghicongtac_15520104/tree/master/src/models) |
-| src/screens | Các màn hình | [Homepage](https://github.com/datnhemployee/khuyennghicongtac_15520104/tree/master/src) |
-| src/services | Tương tác cơ sở dữ liệu | [Homepage](https://github.com/datnhemployee/khuyennghicongtac_15520104/tree/master/src/services) |
-| src/utils | Công cụ hỗ trợ khác: Thời gian, kết nối CSDL, ... | [Homepage](https://github.com/datnhemployee/khuyennghicongtac_15520104/tree/master/src/utils) |
+| src/controllers | Xử lý logic giữa phần mềm và cơ sở dữ liệu | [Đường dẫn](https://github.com/datnhemployee/khuyennghicongtac_15520104/tree/master/src/controllers) |
+| src/models | Các thuật toán khuyến nghị cộng tác | [Đường dẫn](https://github.com/datnhemployee/khuyennghicongtac_15520104/tree/master/src/models) |
+| src/screens | Các màn hình | [Đường dẫn](https://github.com/datnhemployee/khuyennghicongtac_15520104/tree/master/src) |
+| src/services | Tương tác cơ sở dữ liệu | [Đường dẫn](https://github.com/datnhemployee/khuyennghicongtac_15520104/tree/master/src/services) |
+| src/utils | Công cụ hỗ trợ khác: Thời gian, kết nối CSDL, ... | [Đường dẫn](https://github.com/datnhemployee/khuyennghicongtac_15520104/tree/master/src/utils) |
 
 **Thuật toán khuyến nghị**
 | Thuật toán | Mô tả | Mã nguồn |
