@@ -33,7 +33,7 @@ class Controller():
         author = neo4jService.get_author(
             author_id=author_id,
             project_uid=self.get_project_uid(),
-            model_id=self.get_algorithm_id()
+            model_id=self.get_algorithm_id(),
         )
         return {"author": author}
 
@@ -50,7 +50,8 @@ class Controller():
         recommendations = [neo4jService.get_author(
             author_id=recommendation,
             project_uid=self.get_project_uid(),
-            model_id=self.get_algorithm_id()
+            model_id=self.get_algorithm_id(),
+            similarity=sim
         ) for (recommendation, sim) in recommendations]
 
         return {"recommendations": recommendations}

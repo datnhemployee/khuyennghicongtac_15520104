@@ -62,21 +62,13 @@ class CardAuthor(Frame):
             # highlightbackground=DARK_GREY,
         )
 
-        self.label_collaborations = Label(self.frame_content)
-        self.label_collaborations.config(
-            text="Collaborations: {0}".format(self.author.collaborations),
-            font=BODY,
-            background=self.get_default_background(),
-            foreground=self.get_foreground(),
-            anchor="nw",
-            justify="left"
-            # highlightthickness=BORDER_WITH,
-            # highlightbackground=DARK_GREY,
-        )
+        text_similarity = None
+        if (self.author.similarity is not None):
+            text_similarity = "Similarity: %.2f" % self.author.similarity
 
-        self.label_works = Label(self.frame_content)
-        self.label_works.config(
-            text="Works: {0}".format(self.author.works),
+        self.label_similarity = Label(self.frame_content)
+        self.label_similarity.config(
+            text=text_similarity,
             font=BODY,
             background=self.get_default_background(),
             foreground=self.get_foreground(),
@@ -92,30 +84,27 @@ class CardAuthor(Frame):
     def _add_logic(self):
         if(self.clickable == True):
             self.bind("<Button-1>", self._on_click)
-            self.label_collaborations.bind("<Button-1>", self._on_click)
+            self.label_similarity.bind("<Button-1>", self._on_click)
             self.label_icon.bind("<Button-1>", self._on_click)
             self.label_name.bind("<Button-1>", self._on_click)
-            self.label_works.bind("<Button-1>", self._on_click)
             self.frame_content.bind("<Button-1>", self._on_click)
 
     def _on_enter(self, event, **kw):
         if(self.clickable == True):
             color = GREY
             self.config(background=color)
-            self.label_collaborations.config(background=color)
+            self.label_similarity.config(background=color)
             self.label_icon.config(background=color)
             self.label_name.config(background=color)
-            self.label_works.config(background=color)
             self.frame_content.config(background=color)
 
     def _on_leave(self, event, **kw):
         if(self.clickable == True):
             color = self.get_default_background()
             self.config(background=color)
-            self.label_collaborations.config(background=color)
+            self.label_similarity.config(background=color)
             self.label_icon.config(background=color)
             self.label_name.config(background=color)
-            self.label_works.config(background=color)
             self.frame_content.config(background=color)
 
     def _add_animations(self):
@@ -169,11 +158,7 @@ class CardAuthor(Frame):
                              column=0,
                              **grid_default
                              )
-        self.label_collaborations.grid(row=rowIdx_collaborations,
-                                       column=0,
-                                       **grid_default
-                                       )
-        self.label_works.grid(row=rowIdx_works,
-                              column=0,
-                              **grid_default
-                              )
+        self.label_similarity.grid(row=rowIdx_collaborations,
+                                   column=0,
+                                   **grid_default
+                                   )

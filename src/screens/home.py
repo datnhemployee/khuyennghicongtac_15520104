@@ -139,8 +139,10 @@ class Home(Screen):
 
     def _show_list_card_recommendation(self):
         for (idx, card) in enumerate(self.list_card_recommendation):
-            rowIdx = int(idx / max_by_row)
-            colIdx = idx % max_by_row
+            # rowIdx = int(idx / max_by_row)
+            rowIdx = int(idx)
+            # colIdx = idx % max_by_row
+            colIdx = 0
             card.grid(
                 row=rowIdx,
                 column=colIdx,

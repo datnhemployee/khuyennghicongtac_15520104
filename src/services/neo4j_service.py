@@ -35,7 +35,7 @@ class Neo4jService():
 
         return True
 
-    def get_author(self, author_id: int, project_uid: int, model_id: int) -> Author:
+    def get_author(self, author_id: int, project_uid: int, model_id: int, similarity=None) -> Author:
         query = """
             MATCH (a:Author)
             WHERE a.prior_{uid}=TRUE AND
@@ -51,25 +51,21 @@ class Neo4jService():
         result = {
             "author_id": None,
             "name": None,
-            "collaborations": None,
-            "works": None,
+            "similarity": None,
         }
 
         for row in db.run(query, parameters={"aId": int(author_id)}):
             result["author_id"] = int(row[0])
             result["name"] = row[1]
-            result["collaborations"] = int(row[2])
-            result["works"] = int(row[3])
+            result["similarity"] = similarity
 
-        for key in result.keys():
-            if (result[key] is None):
-                return None
+        if (result["name"] is None):
+            return None
 
         result = Author(
             result["author_id"],
             result["name"],
-            result["collaborations"],
-            result["works"],
+            result["similarity"],
         )
         return result
 
@@ -78,9 +74,7 @@ class Neo4jService():
             MATCH (a:Author)
             WHERE a.prior_{uid}=TRUE 
             RETURN DISTINCT a.author_id,
-                a.name,
-                a.neigh_{uid},
-                a.work_prior_{uid} LIMIT $num_authors
+                a.name LIMIT $num_authors
             """.format(
                 uid=project_uid,
                 _id=model_id
@@ -90,8 +84,6 @@ class Neo4jService():
             result[idx] = Author(
                 int(row[0]),
                 row[1],
-                int(row[2]),
-                int(row[3]),
             )
 
         result = [author for author in result if author is not None]

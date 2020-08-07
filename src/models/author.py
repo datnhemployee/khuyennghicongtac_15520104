@@ -1,6 +1,5 @@
 class Author():
-    def __init__(self, _id: int, name: str, collaborations: int, works: int):
+    def __init__(self, _id: int, name: str, similarity=None):
         self._id = _id
         self.name = name
-        self.collaborations = collaborations
-        self.works = works
+        self.similarity = similarity
