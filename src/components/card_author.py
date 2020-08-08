@@ -3,7 +3,7 @@ from PIL import Image, ImageTk
 
 from utils.font import TITLE_SCREEN, BODY, BUTTON
 from utils.file import ICON_RESEARCHER
-from utils.color import GREY, DARK_GREY, BLACK, WHITE, BLUE
+from utils.color import GREY, DARK_GREY, BLACK, WHITE, BLUE, DARK_BLUE, RED, GREEN
 from utils.dimension import PADDING, BORDER_WITH
 from utils.image import RBGAImage
 
@@ -23,7 +23,7 @@ class CardAuthor(Frame):
         return WHITE
 
     def get_foreground(self):
-        return BLUE
+        return BLACK
 
     def _init_components(self, ):
         """
@@ -57,7 +57,7 @@ class CardAuthor(Frame):
             foreground=self.get_foreground(),
             anchor="nw",
             justify="left",
-            wraplengt=200
+            wraplengt=300
             # highlightthickness=BORDER_WITH,
             # highlightbackground=DARK_GREY,
         )
@@ -69,7 +69,7 @@ class CardAuthor(Frame):
         self.label_similarity = Label(self.frame_content)
         self.label_similarity.config(
             text=text_similarity,
-            font=BODY,
+            font=BUTTON,
             background=self.get_default_background(),
             foreground=self.get_foreground(),
             anchor="nw",
@@ -78,8 +78,68 @@ class CardAuthor(Frame):
             # highlightbackground=DARK_GREY,
         )
 
+        self.frame_status = Frame(self)
+        self.frame_status.config(
+            background=self.get_default_background()
+        )
+
+        self.label_status_prediction = Label(self.frame_status)
+        self.label_status_prediction.config(
+            text="",
+            font=BODY,
+            background=self.get_default_background(),
+            foreground=WHITE,
+            anchor="nw",
+            justify="left"
+        )
+
+        self.label_status_acquaintance = Label(self.frame_status)
+        self.label_status_acquaintance.config(
+            text="",
+            font=BODY,
+            background=self.get_default_background(),
+            foreground=WHITE,
+            anchor="nw",
+            justify="left"
+        )
+
         self._add_logic()
         self._add_animations()
+
+    def _show_label_status_acquaintance(self, enable=False):
+        if (enable == True):
+            if (self.author.isAcquantaince is True):
+                self.label_status_acquaintance.config(
+                    text="Acquantaince",
+                    background=DARK_BLUE,
+                )
+        else:
+            self.label_status_acquaintance.config(
+                text="",
+                background=self.get_default_background(),
+            )
+
+    def _show_label_status_prediction(self, enable=False):
+        if (enable == True):
+            if (self.author.isCollaborated is True):
+                self.label_status_prediction.config(
+                    text="True-positive",
+                    background=GREEN,
+                )
+            elif (self.author.isCollaborated is False):
+                self.label_status_prediction.config(
+                    text="False-negative",
+                    background=RED,
+                )
+        else:
+            self.label_status_prediction.config(
+                text="",
+                background=self.get_default_background(),
+            )
+
+    def show_valuation(self, enable=False):
+        self._show_label_status_acquaintance(enable)
+        self._show_label_status_prediction(enable)
 
     def _add_logic(self):
         if(self.clickable == True):
@@ -97,6 +157,11 @@ class CardAuthor(Frame):
             self.label_icon.config(background=color)
             self.label_name.config(background=color)
             self.frame_content.config(background=color)
+            self.frame_status.config(background=color)
+            if(self.label_status_acquaintance['bg'] == self.get_default_background()):
+                self.label_status_acquaintance.config(background=color)
+            if(self.label_status_prediction['bg'] == self.get_default_background()):
+                self.label_status_prediction.config(background=color)
 
     def _on_leave(self, event, **kw):
         if(self.clickable == True):
@@ -106,6 +171,11 @@ class CardAuthor(Frame):
             self.label_icon.config(background=color)
             self.label_name.config(background=color)
             self.frame_content.config(background=color)
+            self.frame_status.config(background=color)
+            if(self.label_status_acquaintance['bg'] == GREY):
+                self.label_status_acquaintance.config(background=color)
+            if(self.label_status_prediction['bg'] == GREY):
+                self.label_status_prediction.config(background=color)
 
     def _add_animations(self):
         if(self.clickable == True):
@@ -127,11 +197,20 @@ class CardAuthor(Frame):
 
         rowIdx_header = 0
         rowIdx_frame_content = 1
-        rowIdx_footer = rowIdx_frame_content + 1
+        rowIdx_frame_status = 2
+        rowIdx_footer = rowIdx_frame_status + 1
 
         rowIdx_name = 1
-        rowIdx_collaborations = 2
+        rowIdx_similarity = 2
         rowIdx_works = 3
+
+        colIdx_similarity = 0
+
+        rowIdx_acquantaince = 0
+        rowIdx_status_prediction = 0
+
+        colIdx_status_prediction = 0
+        colIdx_acquantaince = 1
 
         self.grid_columnconfigure(colIdx_left, weight=1)
         self.grid_columnconfigure(colIdx_right, weight=1)
@@ -158,7 +237,19 @@ class CardAuthor(Frame):
                              column=0,
                              **grid_default
                              )
-        self.label_similarity.grid(row=rowIdx_collaborations,
-                                   column=0,
+        self.label_similarity.grid(row=rowIdx_similarity,
+                                   column=colIdx_similarity,
                                    **grid_default
                                    )
+        self.frame_status.grid(row=rowIdx_frame_status,
+                               column=colIdx_content,
+                               **grid_default
+                               )
+        self.label_status_acquaintance.grid(row=rowIdx_acquantaince,
+                                            column=colIdx_acquantaince,
+                                            **grid_default
+                                            )
+        self.label_status_prediction.grid(row=rowIdx_status_prediction,
+                                          column=colIdx_status_prediction,
+                                          **grid_default
+                                          )

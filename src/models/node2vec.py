@@ -1,5 +1,5 @@
 from models.algorithm import Algorithm
-from services.prior_network_service import NetWorkXGraph, get_all_author_id, get_num_author
+from services.prior_network_service import NetWorkXGraph, get_all_author_id
 from utils.file import get_path_node2vec_emb, existing_file
 from utils.db import db
 import csv

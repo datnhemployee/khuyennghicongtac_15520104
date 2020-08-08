@@ -114,7 +114,11 @@ def init():
 
 def get_node2vec():
     from models.node2vec import Node2vec
+    from models.project import Project
+    project = Project()
+
     algorithm = Node2vec(
+
         p=1.0,
         q=1.0,
 
@@ -171,7 +175,7 @@ def train():
     """
     train_and_valuate: Node2vec
     """
-    # model = get_node2vec()
+    model = get_node2vec()
 
     """
     train_and_valuate: Content based

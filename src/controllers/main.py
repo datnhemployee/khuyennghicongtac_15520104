@@ -27,7 +27,8 @@ class Controller():
         return 1595426051223
 
     def get_algorithm_id(self):
-        return 1596068981262
+        "p= 1.5, q= 0.5"
+        return 1596068914007
 
     def get_author(self, author_id):
         author = neo4jService.get_author(
@@ -51,7 +52,8 @@ class Controller():
             author_id=recommendation,
             project_uid=self.get_project_uid(),
             model_id=self.get_algorithm_id(),
-            similarity=sim
+            similarity=sim,
+            source_id=author_id,
         ) for (recommendation, sim) in recommendations]
 
         return {"recommendations": recommendations}

@@ -71,17 +71,17 @@ class App(Tk):
         """
         self.resizable(False, False)
 
-    # def close_all(self):
-    #     import matplotlib.pyplot as plt
+    def close_all(self):
+        # import matplotlib.pyplot as plt
 
-    #     plt.close('all')
-    #     self.quit()
+        # plt.close('all')
+        self.quit()
 
     def __init__(self, *args, **kwargs):
 
         Tk.__init__(self, *args, **kwargs)
 
-        # self.wm_protocol('WM_DELETE_WINDOW', func=self.close_all)
+        self.wm_protocol('WM_DELETE_WINDOW', func=self.close_all)
 
         self.set_size()
         self._init_all_screen()

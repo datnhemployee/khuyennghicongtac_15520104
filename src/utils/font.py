@@ -1,17 +1,22 @@
 default_font_size = 20
 
 
-def get_font_Size(font_size_design=14) -> int:
+def get_font_size(font_size_design=14) -> int:
     font_size_design = int(float(font_size_design) * 20.0/28.0)
     return font_size_design
 
 
-LOGO = ("Times New Roman", get_font_Size(54), "bold")
-TYPE_TITLE_SCREEN = ("Times New Roman", get_font_Size(16))
-TITLE_SCREEN = ("Times New Roman", get_font_Size(28), "bold")
-HEADER_1 = ("Times New Roman", get_font_Size(28), "bold")
-TYPE_HEADER_2 = ("Times New Roman", get_font_Size(14))
-HEADER_2 = ("Times New Roman", get_font_Size(24))
-BODY = ("Times New Roman", get_font_Size(14))
-BODY_BOLD = ("Times New Roman", get_font_Size(14), "bold")
-BUTTON = ("Times New Roman", get_font_Size(18))
+TIMES_NEW_ROMAN = "Times New Roman"
+CALIBRI = "Calibri"
+SEGOE_UI_LIGHT = "Segoe UI Light"
+font = SEGOE_UI_LIGHT
+
+LOGO = (font, get_font_size(54), "bold")
+TYPE_TITLE_SCREEN = (font, get_font_size(16))
+TITLE_SCREEN = (font, get_font_size(36), "bold")
+HEADER_1 = (font, get_font_size(36), "bold")
+TYPE_HEADER_2 = (font, get_font_size(14))
+HEADER_2 = (font, get_font_size(24))
+BODY = (font, get_font_size(24))
+BODY_BOLD = (font, get_font_size(24), "bold")
+BUTTON = (font, get_font_size(24))

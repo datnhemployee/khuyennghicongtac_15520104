@@ -1,10 +1,13 @@
 from PIL import Image, ImageTk
 
 
-def RBGAImage(path, size=None,):
-    if (size == None):
-        raise "RBGAImage: Lỗi resize hình ảnh."
-    img = Image.open(path).resize((size, size), Image.ANTIALIAS)
+def RBGAImage(path, size=None, width=None, height=None):
+    img = Image.open(path)
+
+    if (size is not None):
+        img = img.resize((size, size), Image.ANTIALIAS)
+    elif (width is not None and height is not None):
+        img = img.resize((width, height), Image.ANTIALIAS)
     img = img.convert("RGBA")
     # print("mode", img.mode)
     return ImageTk.PhotoImage(img)

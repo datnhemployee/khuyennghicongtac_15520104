@@ -114,9 +114,17 @@ PATH_GRAPH_NODE2VEC = connect_path_file(
 """
     Demo database 
 """
-FILE_DEMO_DB = "records.csv"
-PATH_DEMO_DATABASE = connect_path_file(
-    PATH_PUBLIC_FOLDER_NEO4J, FILE_DEMO_DB)
+FILE_AUTHORS_DB = "authors.csv"
+FILE_PRIOR_GRAPH_DB = "prior_graph.csv"
+FILE_TEST_GRAPH_DB = "test_graph.csv"
+
+
+PATH_AUTHORS_DATABASE = connect_path_file(
+    PATH_PUBLIC_FOLDER_NEO4J, FILE_AUTHORS_DB)
+PATH_PRIOR_GRAPH_DATABASE = connect_path_file(
+    PATH_PUBLIC_FOLDER_NEO4J, FILE_PRIOR_GRAPH_DB)
+PATH_TEST_GRAPH_DATABASE = connect_path_file(
+    PATH_PUBLIC_FOLDER_NEO4J, FILE_TEST_GRAPH_DB)
 
 
 def get_path_node2vec_emb(_id): return "public/emb{0}".format(_id)
@@ -152,8 +160,10 @@ ICON_APP = connect_path_file(
     get_current_directory(), "img/icon_app.png")
 ICON_RESEARCHER = connect_path_file(
     get_current_directory(), "img/icon_researcher.png")
-ICON_CHART = connect_path_file(
-    get_current_directory(), "img/icon_chart.png")
+ICON_SWITCHER_OFF = connect_path_file(
+    get_current_directory(), "img/icon_switch_off.png")
+ICON_SWITCHER_ON = connect_path_file(
+    get_current_directory(), "img/icon_switch_on.png")
 """
     Database
 """

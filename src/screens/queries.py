@@ -3,7 +3,7 @@ from utils.image import FlexibleImage
 from utils.dimension import PADDING, SCROLL_BAR_WIDTH
 from utils.font import LOGO, BUTTON, BODY_BOLD
 from utils.color import DARK_BLUE, BLUE, LIGHT_BLUE, BLACK, GREY, ORANGE, WHITE
-from utils.file import ICON_RESEARCHER, ICON_CHART
+from utils.file import ICON_RESEARCHER
 
 from controllers.main import controller
 from controllers.excution import excute

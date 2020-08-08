@@ -1,9 +1,10 @@
 
 from utils.image import FlexibleImage
 from utils.dimension import PADDING, SCROLL_BAR_WIDTH
-from utils.font import LOGO, BUTTON, BODY_BOLD
+from utils.font import LOGO, BUTTON, BODY_BOLD, BODY
 from utils.color import DARK_BLUE, BLUE, LIGHT_BLUE, BLACK, GREY, ORANGE, WHITE
-from utils.file import ICON_RESEARCHER, ICON_CHART
+from utils.file import ICON_RESEARCHER, ICON_SWITCHER_OFF, ICON_SWITCHER_ON
+from utils.image import RBGAImage
 
 from controllers.main import controller
 from controllers.excution import excute
@@ -19,7 +20,27 @@ max_by_row = 2
 class Home(Screen):
     def __init__(self, parent, app):
         super().__init__(parent, app)
+
+    def _before_init_components(self):
         self.author_id = None
+        self.status_switcher = False
+
+        width_icon_switch = BUTTON[1] * 3 + PADDING * 2
+        height_icon_switch = BUTTON[1] + PADDING * 2
+
+        size_default_icon_switch = {
+            "width": width_icon_switch,
+            "height": height_icon_switch
+        }
+        self.icon_switch_off = RBGAImage(
+            ICON_SWITCHER_OFF,
+            **size_default_icon_switch
+        )
+
+        self.icon_switch_on = RBGAImage(
+            ICON_SWITCHER_ON,
+            **size_default_icon_switch
+        )
 
     def _init_components(self):
         background_color = self.get_background()
@@ -57,12 +78,32 @@ class Home(Screen):
         self.label_result = Label(
             self)
         self.label_result.config(
-            text="RESULT & VALUATION",
+            text="RESULT",
             font=BODY_BOLD,
             background=background_color,
             foreground=BLACK,
             anchor="nw"
         )
+
+        self.label_let_see_result = Label(
+            self)
+        self.label_let_see_result.config(
+            text="Let me see the result",
+            font=BODY,
+            background=background_color,
+            foreground=BLACK,
+            anchor="nw"
+        )
+
+        self.label_switcher = Label(
+            self)
+        self.label_switcher.config(
+            image=self.icon_switch_off,
+            font=BODY,
+            background=background_color,
+            anchor="nw"
+        )
+
         """
         ScrollView result     
         """
@@ -100,8 +141,24 @@ class Home(Screen):
 
         self.list_card_recommendation = None
 
+        self.label_switcher.bind("<Button-1>", self._on_click_switcher)
+
     def navigate_queries(self, ):
         self.app.navigate(context="Queries")
+
+    def _on_click_switcher(self, ev, **kw):
+        self.status_switcher = not self.status_switcher
+        if (self.status_switcher == True):
+            self.label_switcher.config(
+                image=self.icon_switch_on,
+            )
+        else:
+            self.label_switcher.config(
+                image=self.icon_switch_off,
+            )
+        if (self.list_card_recommendation is not None):
+            for card in self.list_card_recommendation:
+                card.show_valuation(enable=self.status_switcher)
 
     def _onFrameConfigure(self, event):
         '''Reset the scroll region to encompass the inner frame'''
@@ -111,6 +168,11 @@ class Home(Screen):
     def _callback_update_list_card_recommendation(self, **kw):
         recommendations = kw.get("recommendations", None)
         if (recommendations is not None):
+            if (self.list_card_recommendation is not None):
+                for card in self.list_card_recommendation:
+                    card.grid_forget()
+                    card.destroy()
+
             self.list_card_recommendation = [
                 CardAuthor(self.frame_result, recommendation)
                 for recommendation in recommendations
@@ -183,6 +245,8 @@ class Home(Screen):
 
         self._update_list_card_recommendation(**kwargs)
         self._update_button_filter(**kwargs)
+        self.status_switcher = True
+        self._on_click_switcher(None)
 
     def _show(self, **kw):
 
@@ -208,6 +272,10 @@ class Home(Screen):
 
         self.label_result.pack(side="top", fill="both",
                                expand=False, padx=(PADDING, PADDING))
+        self.label_let_see_result.pack(side="top", fill="both",
+                                       expand=False, padx=(PADDING, PADDING))
+        self.label_switcher.pack(side="top", fill="both",
+                                 expand=False, padx=(PADDING, PADDING))
 
         self.canvas_result.pack(side="left", fill="both", expand=True)
         self.scrollbar_result.pack(side="right", fill="y")
