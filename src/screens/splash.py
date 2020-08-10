@@ -76,7 +76,13 @@ class Splash(Screen):
                 self.label_status.config(
                     text="No connection found. try again."
                 )
-        controller.update_algorithm()
+        try:
+            controller.update_algorithm()
+        except ValueError as e:
+            self.label_status.config(
+                text=e.args
+            )
+            return {}
         self.app.navigate(context="Home")
         return {}
 

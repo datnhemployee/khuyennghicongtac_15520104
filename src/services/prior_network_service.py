@@ -91,12 +91,12 @@ def get_all_author_id(uid: int, type_db: str) -> list:
 
 
 class NetWorkXGraph():
-    def __init__(self, is_directed=False, p=1, q=1):
+    def __init__(self,  p=1, q=1, is_weighted=False, is_directed=False, ):
         self.G = None
         self.is_directed = is_directed
+        self.is_weighted = is_weighted
         self.p = p
         self.q = q
-        self.weight = False
         self.alias_nodes = None
         self.alias_edges = None
 
@@ -106,15 +106,29 @@ class NetWorkXGraph():
             Get CSV file from Neo4j
         """
         query = """
-			WITH "MATCH (a:Author)-[r:COLLABORATE_PRIOR]->(b:Author)
+			WITH "MATCH (a:Author)-[r:prior_{0}]->(b:Author)
 				WHERE a.prior_{0}=TRUE AND b.prior_{0}=TRUE
 				RETURN DISTINCT a.author_id AS au1, b.author_id AS au2" AS query
 			CALL apoc.export.csv.query(query, $file_path, """.format(project_uid)
+
+        if (self.is_weighted == True and self.is_directed == False):
+            query = """
+			WITH "MATCH (a:Author)-[r:prior_weight_{0}]->(b:Author)
+				WHERE a.prior_{0}=TRUE AND b.prior_{0}=TRUE
+				RETURN DISTINCT a.author_id AS au1, b.author_id AS au2, r.score AS weight" AS query
+			CALL apoc.export.csv.query(query, $file_path, """.format(project_uid)
+        elif (self.is_weighted == True and self.is_directed == True):
+            query = """
+			WITH "MATCH (a:Author)-[r:prior_dir_weight_{0}]->(b:Author)
+				WHERE a.prior_{0}=TRUE AND b.prior_{0}=TRUE
+				RETURN DISTINCT a.author_id AS au1, b.author_id AS au2, r.score AS weight" AS query
+			CALL apoc.export.csv.query(query, $file_path, """.format(project_uid)
+
         query += """ { })
 			YIELD file, rows
 			RETURN file, rows
             """
-        print("query", query)
+        # print("query", query)
         num_rows_effective = 0
 
         for row in db.run(query, parameters={"file_path": file_path}):
@@ -123,7 +137,7 @@ class NetWorkXGraph():
 
         return (file_name, num_rows_effective)
 
-    def create(self, project_uid: int, file_name=FILE_GRAPH_NODE2VEC, weight=False):
+    def create(self, project_uid: int, file_name=FILE_GRAPH_NODE2VEC,):
         '''
             Khởi tạo mạng NetworkX
             Reads the input network in networkx.
@@ -135,27 +149,32 @@ class NetWorkXGraph():
             neo4j_path = connect_path_file(PATH_PUBLIC_FOLDER_NEO4J, file_name)
 
         self._create_csv_file(file_path=neo4j_path, project_uid=project_uid)
-
-        self.weight = weight
-        if (self.weight):
+        print("is_weighted", self.is_weighted,
+              "is_directed", self.is_directed, )
+        if (self.is_weighted == True):
             # no weights are add in graph init file
             self.G = nx.read_edgelist(path,
                                       nodetype=str,
                                       delimiter=",",
-                                      data=(('weight', float),),
+                                      data=(('weight', str),),
                                       create_using=nx.DiGraph(),)
+            self.G.remove_nodes_from(['"au1"', '"au2"'])
+            for edge in self.G.edges():
+                score = float(self.G[edge[0]][edge[1]]
+                              ['weight'].replace("\"", ""))
+                self.G[edge[0]][edge[1]]['weight'] = score
         else:
             self.G = nx.read_edgelist(path,
                                       nodetype=str,
                                       delimiter=",",
                                       create_using=nx.DiGraph())
+            self.G.remove_nodes_from(['"au1"', '"au2"'])
             for edge in self.G.edges():
                 self.G[edge[0]][edge[1]]['weight'] = 1
 
         if not self.is_directed:
             self.G = self.G.to_undirected()
 
-        self.G.remove_nodes_from(['"au1"', '"au2"'])
         self.G = nx.relabel_nodes(
             self.G, lambda name: name.replace("\"", ""))
 
@@ -277,7 +296,8 @@ class NetWorkXGraph():
         self.alias_nodes = alias_nodes
         self.alias_edges = alias_edges
 
-    def get_temp_graph(self):
+    def get_temp_graph(self, project_uid):
+        self._create_csv_file(project_uid=project_uid)
         path = PATH_GRAPH_NODE2VEC
         G = nx.read_edgelist(path,
                              nodetype=str,

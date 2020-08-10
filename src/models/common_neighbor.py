@@ -144,7 +144,7 @@ class CommonNeighbor(Algorithm):
 
         from services.prior_network_service import NetWorkXGraph, get_num_author
         nwx = NetWorkXGraph()
-        G = nwx.get_temp_graph()
+        G = nwx.get_temp_graph(project_uid)
 
         lstNodes = list(G.nodes)
         num_author = len(lstNodes)

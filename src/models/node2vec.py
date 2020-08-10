@@ -13,8 +13,12 @@ _temp_file = _temp_node2vec
 
 
 def get_model(path_csv, ):
-    from gensim.models import KeyedVectors
-    model = KeyedVectors.load_word2vec_format(path_csv)
+    try:
+        from gensim.models import KeyedVectors
+        model = KeyedVectors.load_word2vec_format(path_csv)
+    except:
+        raise ValueError(
+            "Please download the model at our github page. Thank you.")
     return model
 
 
@@ -38,6 +42,11 @@ class Node2vec(Algorithm):
                  dimensions=128,
                  window_size=5,
 
+                 is_weighted=False,
+                 is_directed=False,
+
+                 iterations=20,
+
                  descriptions="",
                  valuations={}
                  ):
@@ -46,8 +55,12 @@ class Node2vec(Algorithm):
             "q": q,
             "num_walks": num_walks,
             "walk_length": walk_length,
+            "is_weighted": is_weighted,
+            "is_directed": is_directed,
             "dimensions": dimensions,
-            "window_size": window_size, },
+            "window_size": window_size,
+            "iterations": iterations,
+        },
             descriptions=descriptions,
             valuations=valuations)
         self.p = p
@@ -55,9 +68,14 @@ class Node2vec(Algorithm):
         self.num_walks = num_walks
         self.walk_length = walk_length
         self.dimensions = dimensions
+        self.is_weighted = is_weighted
+        self.is_directed = is_directed
         self.window_size = window_size
+        self.iterations = iterations
 
     def mapFrom(self, algorithm: Algorithm):
+        is_weighted = algorithm.setting.get("is_weighted", False)
+        is_directed = algorithm.setting.get("is_directed", False)
         self.__init__(
             id=algorithm._id,
             p=float(algorithm.setting["p"]),
@@ -66,13 +84,15 @@ class Node2vec(Algorithm):
             walk_length=int(algorithm.setting["walk_length"]),
             dimensions=int(algorithm.setting["dimensions"]),
             window_size=int(algorithm.setting["window_size"]),
+            is_weighted=is_weighted,
+            is_directed=is_directed,
             descriptions=algorithm.descriptions,
             valuations=algorithm.valuations,
         )
 
-    def _walk(self, project_uid: int) -> list:
+    def _walk(self, project_uid: int,  is_directed=False, is_weighted=False) -> list:
         nx_G = NetWorkXGraph(
-            p=self.p, q=self.q)
+            p=self.p, q=self.q, is_directed=is_directed, is_weighted=is_weighted)
         nx_G.create(project_uid=project_uid)
         walks = nx_G.simulate_walks(
             num_walks=self.num_walks, walk_length=self.walk_length)
@@ -90,7 +110,12 @@ class Node2vec(Algorithm):
               *arg,
               **kw
               ):
-        print("Node2vec-start")
+        print("Node2vec-start",
+              "q", self.q,
+              "p", self.p,
+              "num_walks", self.num_walks,
+              "walk_length", self.walk_length,
+              "window_size", self.window_size)
         workers = 8
         num_iteration = 1
         project_uid = int(kw.get("project_uid"))
@@ -99,7 +124,7 @@ class Node2vec(Algorithm):
         # cb_emb = kw.get("cb_emb", None)
 
         output = self.get_output()
-        walks = self._walk(project_uid)
+        walks = self._walk(project_uid, self.is_directed, self.is_weighted)
 
         self._learn_embedding(
             output,
@@ -107,7 +132,7 @@ class Node2vec(Algorithm):
             self.dimensions,
             self.window_size,
             workers,
-            num_iteration,
+            self.iterations
         )
         # release walks
         walks = None
@@ -132,12 +157,13 @@ class Node2vec(Algorithm):
             dimensions=128,
             window_size=10,
             workers=8,
-            iter=1
+            iterations=10
     ):
         '''
         Learn embeddings by optimizing the Skipgram objective using SGD.
         '''
         from gensim.models import Word2Vec
+        print("learn", iterations)
 
         """
         + Bug: TypeError: object of type 'map' has no len()
@@ -150,7 +176,7 @@ class Node2vec(Algorithm):
         """
         # walks = [list(map(str, walk)) for walk in walks]
         model = Word2Vec(walks, size=dimensions, window=window_size,
-                         min_count=0, sg=1, workers=workers, iter=iter,)
+                         min_count=0, sg=1, workers=workers, iter=iterations, negative=min([20, window_size/2]))
         model.wv.save_word2vec_format(output)
 
     # def get_model(self, ):

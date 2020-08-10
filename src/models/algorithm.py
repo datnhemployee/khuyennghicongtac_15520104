@@ -104,7 +104,7 @@ class Algorithm():
                     db.run(query, parameters={
                         "a_id": a_id, "b_id": b_id, "top": top})
 
-    def valuate(self, project_uid: int) -> (float, float, float):
+    def valuate(self, project_uid: int) -> dict:
         true_positive = 0
         false_positive = 10
         false_negative = 10

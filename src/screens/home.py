@@ -88,7 +88,7 @@ class Home(Screen):
         self.label_let_see_result = Label(
             self)
         self.label_let_see_result.config(
-            text="Let me see the result",
+            text="Let me see the validations",
             font=BODY,
             background=background_color,
             foreground=BLACK,

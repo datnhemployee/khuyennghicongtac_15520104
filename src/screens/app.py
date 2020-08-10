@@ -51,7 +51,7 @@ class App(Tk):
             self.frames[name] = frame
             frame.grid(row=0, column=0, sticky="nsew")
 
-    def set_size(self, height=None, width=None):
+    def resize_screen(self, height=None, width=None):
         screen_width = self.winfo_screenwidth()
         screen_height = self.winfo_screenheight()
         self.width = int(screen_width * 2 / 3)
@@ -83,7 +83,8 @@ class App(Tk):
 
         self.wm_protocol('WM_DELETE_WINDOW', func=self.close_all)
 
-        self.set_size()
+        self.resize_screen()
+        # self.attributes('zoomed', True)
         self._init_all_screen()
 
         self.navigate("Splash")
