@@ -26,6 +26,13 @@ Do Github không cho phép đăng tệp có kích thước hơn 100MB nên bạn
 ## Ứng dụng minh họa: weCoNet 
  Nhằm để hiện thực hóa kết quả đầu ra sau khi huấn luyện mô hình Node2vec, em xây dựng phần mềm weCoNet nhằm thực hiện khuyến nghị Top10 nghiên cứu viên cho từng nghiên cứu viên trong tập gồm 319,247 nghiên cứu viên dựa trên mô hình Node2vec đã học được từ mạng đồng tác giả cho trước (mô tả trong Báo cáo Khóa Luận Tốt Nghiệp Khuyến Nghị Cộng Tác Dựa Trên Tiếp Cận Học Sâu). 
 
+**Tập dữ liệu**
+
+| Tên | Số liên kết cộng tác | Thời gian xét | Số nghiên cứu viên | 
+|--------------|-------|-------|-------|
+| [Huấn luyện](https://raw.githubusercontent.com/datnhemployee/khuyennghicongtac_15520104/master/public/prior_graph.csv) | 1,042,092 | 2014-2015 | 319,247  | 
+| [Đánh giá](https://github.com/datnhemployee/khuyennghicongtac_15520104/blob/master/public/test_graph.csv) | 290,502 | 2016 |  114,327  | 
+
 **Chức năng**
 + Xem danh sách khuyến nghị: Phần mềm sẽ cho xem danh sách khuyến nghị Top10 của 1 nghiên cứu viên bất kì từ tập huấn luyện
 + Xem kết quả khuyến nghị: Phần mềm sẽ cho xem kết quả khuyến nghị của từng khuyến nghị. Cụ thể như sau:
