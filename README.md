@@ -1,4 +1,4 @@
-# weCoNet
+# ĐỀ TÀI: Khuyến Nghị Cộng tác dựa trên tiếp cận học sâu
 **Trường:** Đại học Công Nghệ Thông Tin - Đại học Quốc gia Hồ Chí Minh
 
 **Lớp:** SE505.K21 (Khóa luận tốt nghiệp)
@@ -7,7 +7,7 @@
 
 **Nhóm sinh viên thực hiện:** Nguyễn Hữu Đạt - 15520104
 
-**Khởi động chương trình demo:** python src/main.py
+**Khởi động chương trình minh họa:** python src/main.py
 
 **Ghi chú:** 
 Do Github không cho phép đăng tệp có kích thước hơn 100MB nên bạn đọc vui lòng tải mô hình đã huấn luyện tại [Google Drive](https://drive.google.com/file/d/122n-UZNBmxoKSiVoixZBPfVCByPvf4Y1/view?usp=sharing) và đặt vào thư mục public/. 
@@ -23,10 +23,19 @@ Do Github không cho phép đăng tệp có kích thước hơn 100MB nên bạn
 ## Giới thiệu đề tài
  Trong nghiên cứu khoa học, việc cộng tác đem lại nhiều lợi ích cho các nhà nghiên cứu khi chung tay thực hiện công trình nghiên cứu của mình. Dần theo thời gian, kho dữ liệu bài báo khoa học trở nên khổng lồ và kích thước tăng đáng kể. Do đó, bài toán khuyến nghị cộng tác dần nhận được quan tâm bởi các nhà khoa học. Và cũng theo xu hướng, sự ra đời phương pháp học sâu Node2vec cũng đang nhận được nhiều sự quan tâm của các nhà nghiên cứu. Nhất là các nghiên cứu viên nghiên cứu đề tài trong lĩnh vực khoa học máy tính. Bản thân Node2vec cũng có một số công trình nghiên cứu kế thừa nhằm giải quyết thách thức và khó khăn mà Node2vec còn bỏ ngỏ. Việc khuyến nghị cộng tác dựa trên tiếp cận học sâu Node2vec sẽ giúp hỗ trợ cộng đồng học thuật trong việc nghiên cứu ứng dụng của Node2vec. Đồng thời, việc so sánh Node2vec với một số phương pháp truyền thống khi giải quyết bài toán khuyến  nghị cộng tác sẽ làm nổi bật ưu nhược điểm của Node2vec so với các phương pháp truyền thống. Nhờ vào đó, các nghiên cứu viên/ nhà phát triển có thể chọn lựa sử dụng giữa Node2vec và phương pháp truyền thống trong khuyến nghị cộng tác.
 
-## Phần mềm demo
+## Ứng dụng minh họa: weCoNet 
  Nhằm để hiện thực hóa kết quả đầu ra sau khi huấn luyện mô hình Node2vec, em xây dựng phần mềm weCoNet nhằm thực hiện khuyến nghị Top10 nghiên cứu viên cho từng nghiên cứu viên trong tập gồm 319,247 nghiên cứu viên dựa trên mô hình Node2vec đã học được từ mạng đồng tác giả cho trước (mô tả trong Báo cáo Khóa Luận Tốt Nghiệp Khuyến Nghị Cộng Tác Dựa Trên Tiếp Cận Học Sâu). 
- 
-## Công nghệ và môi trường
+
+**Chức năng**
++ Xem danh sách khuyến nghị: Phần mềm sẽ cho xem danh sách khuyến nghị Top10 của 1 nghiên cứu viên bất kì từ tập huấn luyện
++ Xem kết quả khuyến nghị: Phần mềm sẽ cho xem kết quả khuyến nghị của từng khuyến nghị. Cụ thể như sau:
+
+| Kí hiệu | Mô tả |
+|--------------|-------|
+| True-positive | Nghiên cứu viên và ứng viên cộng tác thực sự cộng tác năm 2016 |
+| False-positive | Nghiên cứu viên và ứng viên cộng tác KHÔNG cộng tác năm 2016 |
+| Acquantaince |  Nghiên cứu viên và ứng viên cộng tác có cộng tác năm 2014-2015 |
+  
 **Công nghệ** 
  - [Python](https://www.python.org/) *phiên bản 3.7.3*
 
@@ -54,4 +63,6 @@ Do Github không cho phép đăng tệp có kích thước hơn 100MB nên bạn
 **Thuật toán khuyến nghị**
 | Thuật toán | Mô tả | Mã nguồn |
 |--------------|-------|-------|
+| Node2vec | Tham khảo từ [trang nguồn](https://github.com/aditya-grover/node2vec) | [node2vec.py](https://github.com/datnhemployee/khuyennghicongtac_15520104/blob/master/src/models/node2vec.py) |
+| Node2vec | Tham khảo từ [Homepage](https://github.com/aditya-grover/node2vec) | [node2vec.py](https://github.com/datnhemployee/khuyennghicongtac_15520104/blob/master/src/models/node2vec.py) |
 | Node2vec | Tham khảo từ [Homepage](https://github.com/aditya-grover/node2vec) | [node2vec.py](https://github.com/datnhemployee/khuyennghicongtac_15520104/blob/master/src/models/node2vec.py) |
