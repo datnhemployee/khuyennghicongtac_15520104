@@ -74,5 +74,17 @@ Xem thêm trình chiếu sử dụng phần mềm weCoNet tại: [Youtube](https
 | Thuật toán | Mô tả | Mã nguồn |
 |--------------|-------|-------|
 | Node2vec | Tham khảo từ [trang nguồn](https://github.com/aditya-grover/node2vec) | [node2vec.py](https://github.com/datnhemployee/khuyennghicongtac_15520104/blob/master/src/models/node2vec.py) |
-| Node2vec | Tham khảo từ [Homepage](https://github.com/aditya-grover/node2vec) | [node2vec.py](https://github.com/datnhemployee/khuyennghicongtac_15520104/blob/master/src/models/node2vec.py) |
-| Node2vec | Tham khảo từ [Homepage](https://github.com/aditya-grover/node2vec) | [node2vec.py](https://github.com/datnhemployee/khuyennghicongtac_15520104/blob/master/src/models/node2vec.py) |
+| Content-based | Xem Chương 2 [Báo cáo docx](https://drive.google.com/file/d/1IzdFMSYUda5PmjjVrTmbfTPRqW0NSzDM/view?usp=sharing) | [node2vec.py](https://github.com/datnhemployee/khuyennghicongtac_15520104/blob/master/src/models/content_based.py) |
+| Adamic Adar | Xem Chương 2  [Báo cáo docx](https://drive.google.com/file/d/1IzdFMSYUda5PmjjVrTmbfTPRqW0NSzDM/view?usp=sharing) | [adamic.py](https://github.com/datnhemployee/khuyennghicongtac_15520104/blob/master/src/models/adamic.py) |
+| Jaccard Coefficient | Xem Chương 2 [Báo cáo docx](https://drive.google.com/file/d/1IzdFMSYUda5PmjjVrTmbfTPRqW0NSzDM/view?usp=sharing) | [jaccard.py](https://github.com/datnhemployee/khuyennghicongtac_15520104/blob/master/src/models/jaccard.py) |
+| Common Neighbors | Xem Chương 2 [Báo cáo docx](https://drive.google.com/file/d/1IzdFMSYUda5PmjjVrTmbfTPRqW0NSzDM/view?usp=sharing) | [common_neighbor.py](https://github.com/datnhemployee/khuyennghicongtac_15520104/blob/master/src/models/common_neighbor.py) |
+
+
+**Kết quả thực nghiệm: **
+| Thuật toán | Precision | Recall | F-Measure |
+|--------------|-------|-------|-------|
+| Content-based | 0.36 | 0.35 | 0.33 |
+| Common Neighbors | 0.19|  0.33 | 0.24 |
+| Adamic Adar | 0.2  | 0.35 | 0.25 |
+| Jaccard Coefficient | 0.17 | 0.29 | 0.21 |
+| Node2vec | 0.17  | 0.35 | 0.23 |
