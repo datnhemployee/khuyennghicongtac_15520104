@@ -9,6 +9,8 @@
 
 **Khởi động chương trình minh họa:** python src/main.py
 
+**Chạy thuật toán và đánh giá:** python src/train.py
+
 **Ghi chú:** 
 Do Github không cho phép đăng tệp có kích thước hơn 100MB nên bạn đọc vui lòng tải mô hình đã huấn luyện tại [Google Drive](https://drive.google.com/file/d/122n-UZNBmxoKSiVoixZBPfVCByPvf4Y1/view?usp=sharing) và đặt vào thư mục public/. 
 
